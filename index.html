@@ -196,7 +196,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -206,7 +206,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -253,327 +253,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/02/自动化批量打包/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZhanKail">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KailTalk">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/02/自动化批量打包/" itemprop="url">Untitled</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T20:43:14+08:00">
-                2018-08-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>title: 自动化批量打包<br>date: 2017-08-27 20:31<br>tags: [iOS, 签名]</p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><pre><code>手动打包是一个机械 而又 非常浪费时间的过程,每当测试人员想你要测试包的时候 , 你就不得不重复这一次次过程.从我自己现在工作中的一个项目的场景谈起,他最终会需要生成n个包(大于十个且数量随销售增加),但它使用的是同一套源代码,只是需要修改plist中的一些参数,eg:`dispalyName/Icon/…如果是手动打包的话,每次更新版本就是你听着风扇狂响崩溃的时候
-</code></pre><h2 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h2><h4 id="1-xcodebuild-list-project-lt-projectname-gt-workspace-lt-workspacename-gt-json-gt-先查看一下项目的scheme-amp-configrations"><a href="#1-xcodebuild-list-project-lt-projectname-gt-workspace-lt-workspacename-gt-json-gt-先查看一下项目的scheme-amp-configrations" class="headerlink" title="1.xcodebuild -list [[-project &lt;projectname&gt;]|[-workspace &lt;workspacename&gt;]] [-json] -&gt; 先查看一下项目的scheme &amp; configrations:"></a>1.<code>xcodebuild -list [[-project &lt;projectname&gt;]|[-workspace &lt;workspacename&gt;]] [-json]</code> -&gt; 先查看一下项目的scheme &amp; configrations:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">// 先cd到你的项目路径</div><div class="line">$ cd xxxx</div><div class="line">// 查看一下项目的scheme &amp; configrations</div><div class="line">$ xcodebuild -list -project YouXiaoYun.xcodeproj -json</div><div class="line">&#123;</div><div class="line">  &quot;project&quot; : &#123;</div><div class="line">    &quot;targets&quot; : [</div><div class="line">      &quot;xxx&quot;,</div><div class="line">      &quot;xxxTests&quot;</div><div class="line">    ],</div><div class="line">    &quot;schemes&quot; : [</div><div class="line">      &quot;xxx&quot;</div><div class="line">    ],</div><div class="line">    &quot;configurations&quot; : [</div><div class="line">      &quot;Debug&quot;,</div><div class="line">      &quot;Release&quot;</div><div class="line">    ],</div><div class="line">    &quot;name&quot; : &quot;xxx&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="2-build-生成-app文件"><a href="#2-build-生成-app文件" class="headerlink" title="2.build 生成 .app文件"></a>2.build 生成 .app文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ xcodebuild -workspace &lt;#workspacePath#&gt; -scheme &lt;#scheme#&gt; -configuration &lt;#configuration#&gt; -sdk iphoneos build &lt;#showBuildSettings#&gt; &lt;#buildsetting&gt;=&lt;value#&gt; </div><div class="line">...</div><div class="line">...</div><div class="line">** BUILD SUCCEEDED **</div></pre></td></tr></table></figure>
-<ul>
-<li><code>&lt;buildsetting&gt;=&lt;value&gt;</code>: 一般设置证书(CODE_SIGN_IDENTITY),配置文件(PROVISIONING_PROFILE),SYMROOT</li>
-<li><code>&lt;buildaction&gt;</code>: 默认是build, 其他 buildaction如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">buildaction ...</div><div class="line">         Specify a build action (or actions) to perform on the target. Available build actions are:</div><div class="line"></div><div class="line">         build       Build the target in the build root (SYMROOT).  This is the default build action.</div><div class="line"></div><div class="line">         analyze     Build and analyze a target or scheme from the build root (SYMROOT).  This requires</div><div class="line">                     specifying a scheme.</div><div class="line"></div><div class="line">         archive     Archive a scheme from the build root (SYMROOT).  This requires specifying a scheme.</div><div class="line"></div><div class="line">         test        Test a scheme from the build root (SYMROOT).  This requires specifying a scheme and</div><div class="line">                     optionally a destination.</div><div class="line"></div><div class="line">         installsrc  Copy the source of the project to the source root (SRCROOT).</div><div class="line"></div><div class="line">         install     Build the target and install it into the target&apos;s installation directory in the dis-tribution distribution</div><div class="line">                     tribution root (DSTROOT).</div><div class="line"></div><div class="line">         clean       Remove build products and intermediate files from the build root (SYMROOT).</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="3-xcrun-导出成包"><a href="#3-xcrun-导出成包" class="headerlink" title="3.xcrun:导出成包"></a>3.<code>xcrun</code>:导出成包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcrun -sdk iphoneos -v PackageApplication &lt;#.appPath#&gt; -o &lt;#.ipaPath/xxx.ipa#&gt;</div></pre></td></tr></table></figure>
-<ul>
-<li><code>&lt;#.appPath#&gt;</code>:  .app文件的路径</li>
-<li><code>&lt;#.ipaPath/xxx.ipa#&gt;</code>: .ipa包导出的路径,和.ipa包的名字</li>
-</ul>
-<p>警告:<code>warning: PackageApplication is deprecated, use xcodebuild -exportArchive instead.</code><br>但是不会影响程序的运行.<br>想要消除警告可用<code>xcodebuild archive</code>&amp;<code>xcodebuild -exportArchive ...</code>来生成和导出包,详细的用法可以参照<a href="https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html" target="_blank" rel="external">官方文档</a></p>
-<h2 id="批量打包思路"><a href="#批量打包思路" class="headerlink" title="批量打包思路"></a>批量打包思路</h2><p>批量打包的大体过程为两个步骤<br>1.代码编译成.app文件<br>2..修改内容,然后重签名 生成.ipa包<br><img src="/images/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%89%B9%E9%87%8F%E6%89%93%E5%8C%85/82F80C2D-F272-4AE4-864A-525B98B8520C.png" alt=""></p>
-<p> 我们在打包的时候浪费最多时间的就是第一个步骤编译生成.app文件,根据以上所说的项目背景,我们应该在codesign上下功夫,也就是说 但当编译成.app文件后,通过修改.plist文件再重签名达到自动化批量打包的效果</p>
-<h4 id="1-codesign-重签名"><a href="#1-codesign-重签名" class="headerlink" title="1.codesign: 重签名"></a>1.<code>codesign</code>: 重签名</h4><p><code>codesign -f -s &quot;iPhone Distribution: xx co., LTD&quot; --entitlements &lt;#EntitlementsPath#&gt; $ipaPath/Payload/xxx.app</code></p>
-<ul>
-<li>entitlements: 自己本地创建的授权文件.可以参照<a href="https://www.objc.io/issues/17-security/inside-code-signing/" target="_blank" rel="external">Inside Code Signing</a>中的设置,如下<br><img src="/images/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%89%B9%E9%87%8F%E6%89%93%E5%8C%85/3E8912A1-B9A6-4A05-969E-7775C67C22C3.png" alt=""></li>
-</ul>
-<h4 id="2-查看签名信息-codesign-vv-d-Example-app"><a href="#2-查看签名信息-codesign-vv-d-Example-app" class="headerlink" title="2.查看签名信息:codesign -vv -d Example.app"></a>2.查看签名信息:<code>codesign -vv -d Example.app</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">$ codesign -vv -d xxx.app</div><div class="line">Executable=xxx/Payload/xxx.app/xxx</div><div class="line">Identifier=com.xxx</div><div class="line">Format=app bundle with Mach-O universal (armv7 arm64)</div><div class="line">CodeDirectory v=20200 size=71375 flags=0x0(none) hashes=2223+5 location=embedded</div><div class="line">Signature size=4748</div><div class="line">Authority=iPhone Distribution: xxx co., LTD</div><div class="line">Authority=Apple Worldwide Developer Relations Certification Authority</div><div class="line">Authority=Apple Root CA</div><div class="line">Signed Time=2017年11月5日 下午3:31:14</div><div class="line">Info.plist entries=36</div><div class="line">TeamIdentifier=xxx</div><div class="line">Sealed Resources version=2 rules=13 files=702</div><div class="line">Internal requirements count=1 size=200</div></pre></td></tr></table></figure>
-<p>查看Authority 开头的三个中代表:我的证书,Apple私钥签名我的公钥,公证处(CA)</p>
-<h4 id="3-检测重签名是否成功"><a href="#3-检测重签名是否成功" class="headerlink" title="3.检测重签名是否成功"></a>3.检测重签名是否成功</h4><p><code>codesign --verify Example.app</code>: -&gt; 没有任何输出则代表签名完好</p>
-<h2 id="最终代码"><a href="#最终代码" class="headerlink" title="最终代码"></a>最终代码</h2><p> <a href="https://github.com/ZhanKail/AutoPacking" target="_blank" rel="external">demo下载</a></p>
-<h2 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h2><h4 id="iOS-证书配置问题"><a href="#iOS-证书配置问题" class="headerlink" title="iOS 证书配置问题"></a>iOS 证书配置问题</h4><p>编译生成.app文件的时候<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Code Signing Error: Code signing is required for product type &apos;Application&apos; in SDK &apos;iOS 11.0&apos;</div><div class="line">** BUILD FAILED **</div></pre></td></tr></table></figure></p>
-<ul>
-<li><p>1.检查项目是不是选择了自动签名,使用脚本签名的时候 不能打开自动签名<br><img src="/images/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%89%B9%E9%87%8F%E6%89%93%E5%8C%85/B3217A71-84DE-490C-9722-0ECCB695BA05.png" alt=""></p>
-</li>
-<li><p>2.打开keychain,检查你的证书, 配置文件设置是否正确<br><img src="/images/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%89%B9%E9%87%8F%E6%89%93%E5%8C%85/10228E9E-06BF-48A8-AA1C-6221EC904397.png" alt=""></p>
-</li>
-</ul>
-<h4 id="app相关属性移除"><a href="#app相关属性移除" class="headerlink" title=".app相关属性移除:"></a>.app相关属性移除:</h4><p>如果在重签名中遇到了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ codesign -f -s &quot;iPhone Distribution: XXXXX&quot; --entitlements xxxx.plist  xxxx/Payload/xxxx.app</div><div class="line">xxxx/Payload/xxxx.app: replacing existing signature</div><div class="line">xxxx/Payload/xxxx.app: resource fork, Finder information, or similar detritus not allowed</div></pre></td></tr></table></figure></p>
-<p>可以使用<code>xattr -cr $ipaPath/Payload/xxx.app</code>: 移除包内一些配置属性,详情可看:<a href="https://developer.apple.com/library/content/qa/qa1940/_index.html" target="_blank" rel="external">官方文档</a></p>
-<p>如果遇到其他不能解决的问题欢迎在下方留言</p>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>适当地使用脚本打包是提高效率,减少反复机械打包操作的途径.可以尝试着使用<code>xcodebuild</code> 和 <code>codesign</code> 打一个包试试.然后一一解决出现的问题, 那样会有趣的多. 网上也已经有各种指令报错的解决方法了,当网上找不到答案的时候, 可以尝试着使用stackoverflow提问, 上面有很多非常积极和热心的网友</p>
-<p>参考文章:<br><a href="http://blog.cnbang.net/tech/3386/" target="_blank" rel="external">iOS App 签名的原理</a><br><a href="https://www.objc.io/issues/17-security/inside-code-signing/" target="_blank" rel="external">Inside Code Signing</a><br><a href="http://www.jianshu.com/p/4cf4e45a4411" target="_blank" rel="external">关于 iOS 批量打包的总结 - 简书</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/02/YYCache读后感/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZhanKail">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KailTalk">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/02/YYCache读后感/" itemprop="url">Untitled</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T20:42:34+08:00">
-                2018-08-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>title: YYCache读后感<br>date: 2017-11-08 23:11<br>tags: [源码阅读]</p>
-<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><ul>
-<li>什么是cache 以及 为什么要使用cache</li>
-<li>YYCache的查存取删  (缓存LRU)</li>
-<li>一个优秀的缓存库不可缺少什么</li>
-<li>学习到的编程技巧</li>
-<li>思考</li>
-</ul>
-<h2 id="什么是缓存"><a href="#什么是缓存" class="headerlink" title="什么是缓存"></a>什么是缓存</h2><p><img src="/images/YYCache%E8%AF%BB%E5%90%8E%E6%84%9F/6F456B27-2161-4306-8110-46B0E8BCF956.png" alt=""></p>
-<ul>
-<li>读写速度,存储容量介于CPU与主存之间的存储器,用于缓存一些临时文件</li>
-<li>读写速度: 寄存器 &gt; 缓存 &gt; 主存</li>
-<li>存储容量: 主存 &gt; 缓存 &gt; 寄存器<br>Q: 为什么需要缓存/使用缓存的场景<br>A: 提高软件的<strong>响应速度</strong>,<strong>节约流量</strong>,提高用户体验,一个用户量高的软件必定离不开缓存的使用</li>
-</ul>
-<h2 id="YYCache"><a href="#YYCache" class="headerlink" title="YYCache"></a>YYCache</h2><h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><p><img src="/images/YYCache%E8%AF%BB%E5%90%8E%E6%84%9F/C9357752-8147-4C54-860E-635FEB622625.png" alt=""></p>
-<ul>
-<li>YYCache 主要分为内存缓存 YYMemoryCache 与磁盘缓存 YYDiskCache</li>
-<li><code>YYCache</code>类是封装好的,主要向外提供的接口</li>
-<li>内存缓存提供容量小但高速的存取功能</li>
-<li><p>磁盘缓存提供大容量但低速的持久化存储</p>
-</li>
-<li><p>存储位置 <code>Library/Cache</code></p>
-</li>
-<li>查: 先看memory中有没有, 没有的话再到disk中查找,如果没有返回nil</li>
-<li>存: 先往memory里面存,存往再向disk中存</li>
-<li>取: 先在memory中拿,没有的话再向disk中拿,拿得到的话再向memory存一遍(以便于下次取的时候更快),拿不到便返回nil</li>
-<li>删: 先从memory删除,再从disk中删<br>具体的<a href="https://www.jianshu.com/p/b8dcf6634fab" target="_blank" rel="external">源码分析</a>网上很多资料,不在赘述<h2 id="如何设计一个缓存库"><a href="#如何设计一个缓存库" class="headerlink" title="如何设计一个缓存库"></a>如何设计一个缓存库</h2></li>
-<li>具有内存缓存以及磁盘缓存</li>
-<li>线程安全(锁的挑选以及使用)</li>
-<li>缓存替换策略的选择(Optimal,FIFO,LRU…)</li>
-</ul>
-<h2 id="学习到的编程技巧"><a href="#学习到的编程技巧" class="headerlink" title="学习到的编程技巧"></a>学习到的编程技巧</h2><h4 id="系统宏"><a href="#系统宏" class="headerlink" title="系统宏"></a>系统宏</h4><ul>
-<li><code>NS_ASSUME_NONNULL_BEGIN</code> and <code>NS_ASSUME_NONNULL_END</code><br>between <code>NS_ASSUME_NONNULL_BEGIN</code> and <code>NS_ASSUME_NONNULL_END</code><br>-&gt;all property is nonnull</li>
-<li><code>UNAVAILABLE_ATTRIBUTE</code><br>使用<code>UNAVAILABLE_ATTRIBUTE</code>的方法 强行直接调用会报错, 当实例不想直接用init 初始化的时候可使用<br>eg: <code>- (instancetype)init UNAVAILABLE_ATTRIBUTE;</code></li>
-</ul>
-<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>Q: 开发过程中什么样子的数据需要备份<br>A: 1.需要可备份存储的资料 -&gt; <code>Document</code></p>
-<pre><code>- 微信聊天记录
-- 单机游戏进度
-
-2. 不需要可备份存储的资料 -&gt; `Library/Cache`
-- 朋友圈,新闻等 资讯类
-</code></pre><p>Q: App设置中清理缓存 清理的是哪个文件下的资源<br>A: 看清理缓存 对应的 清理机制 一般清理的是<code>Library/Cache</code></p>
-<p>Q: 存放在 <code>document</code>, <code>Library</code>, <code>tmp</code> 外的文件夹 系统如何对待<br>A: 系统只备份<code>document</code> 跟 <code>Library/preference</code> 下的数据 , 且重启手机,系统也只删除tmp下的数据</p>
-<p>Q: 为什么yycache里面要使用锁<br>A: 在进行读写操作修改链表的时候,不可以有并发操作同时修改链表<br>   eg: 售货员有1张票  当有人买了 进行修改删除的时候 其他人也可以进行操作 便会出现错误.</p>
-<p>参考:<br><a href="http://blog.flight.dev.qunar.com/2017/04/19/yycache-code-study/" target="_blank" rel="external">QunarFlight团队|YYCache解读</a><br><a href="https://blog.ibireme.com/2015/10/26/yycache/" target="_blank" rel="external">YYCache的设计思路</a></p>
-<p>刚开始写文章,写的并不是非常好,但会坚持下去的<br>另外想要源码标注详细中文注释的可以在下面留邮箱</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/02/MoWords | MVVM 的使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -593,7 +272,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/02/MoWords | MVVM 的使用/" itemprop="url">Untitled</a></h1>
+                <a class="post-title-link" href="/2018/08/02/MoWords | MVVM 的使用/" itemprop="url">Unbenannt</a></h1>
         
 
         <div class="post-meta">
@@ -603,7 +282,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T08:02:49+08:00">
                 2018-08-02
@@ -724,6 +403,325 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/08/YYCache读后感/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZhanKail">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KailTalk">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/08/YYCache读后感/" itemprop="url">YYCache读后感</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-08T23:11:00+08:00">
+                2017-11-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><ul>
+<li>什么是cache 以及 为什么要使用cache</li>
+<li>YYCache的查存取删  (缓存LRU)</li>
+<li>一个优秀的缓存库不可缺少什么</li>
+<li>学习到的编程技巧</li>
+<li>思考</li>
+</ul>
+<h2 id="什么是缓存"><a href="#什么是缓存" class="headerlink" title="什么是缓存"></a>什么是缓存</h2><p><img src="/images/YYCache%E8%AF%BB%E5%90%8E%E6%84%9F/6F456B27-2161-4306-8110-46B0E8BCF956.png" alt=""></p>
+<ul>
+<li>读写速度,存储容量介于CPU与主存之间的存储器,用于缓存一些临时文件</li>
+<li>读写速度: 寄存器 &gt; 缓存 &gt; 主存</li>
+<li>存储容量: 主存 &gt; 缓存 &gt; 寄存器<br>Q: 为什么需要缓存/使用缓存的场景<br>A: 提高软件的<strong>响应速度</strong>,<strong>节约流量</strong>,提高用户体验,一个用户量高的软件必定离不开缓存的使用</li>
+</ul>
+<h2 id="YYCache"><a href="#YYCache" class="headerlink" title="YYCache"></a>YYCache</h2><h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><p><img src="/images/YYCache%E8%AF%BB%E5%90%8E%E6%84%9F/C9357752-8147-4C54-860E-635FEB622625.png" alt=""></p>
+<ul>
+<li>YYCache 主要分为内存缓存 YYMemoryCache 与磁盘缓存 YYDiskCache</li>
+<li><code>YYCache</code>类是封装好的,主要向外提供的接口</li>
+<li>内存缓存提供容量小但高速的存取功能</li>
+<li><p>磁盘缓存提供大容量但低速的持久化存储</p>
+</li>
+<li><p>存储位置 <code>Library/Cache</code></p>
+</li>
+<li>查: 先看memory中有没有, 没有的话再到disk中查找,如果没有返回nil</li>
+<li>存: 先往memory里面存,存往再向disk中存</li>
+<li>取: 先在memory中拿,没有的话再向disk中拿,拿得到的话再向memory存一遍(以便于下次取的时候更快),拿不到便返回nil</li>
+<li>删: 先从memory删除,再从disk中删<br>具体的<a href="https://www.jianshu.com/p/b8dcf6634fab" target="_blank" rel="external">源码分析</a>网上很多资料,不在赘述<h2 id="如何设计一个缓存库"><a href="#如何设计一个缓存库" class="headerlink" title="如何设计一个缓存库"></a>如何设计一个缓存库</h2></li>
+<li>具有内存缓存以及磁盘缓存</li>
+<li>线程安全(锁的挑选以及使用)</li>
+<li>缓存替换策略的选择(Optimal,FIFO,LRU…)</li>
+</ul>
+<h2 id="学习到的编程技巧"><a href="#学习到的编程技巧" class="headerlink" title="学习到的编程技巧"></a>学习到的编程技巧</h2><h4 id="系统宏"><a href="#系统宏" class="headerlink" title="系统宏"></a>系统宏</h4><ul>
+<li><code>NS_ASSUME_NONNULL_BEGIN</code> and <code>NS_ASSUME_NONNULL_END</code><br>between <code>NS_ASSUME_NONNULL_BEGIN</code> and <code>NS_ASSUME_NONNULL_END</code><br>-&gt;all property is nonnull</li>
+<li><code>UNAVAILABLE_ATTRIBUTE</code><br>使用<code>UNAVAILABLE_ATTRIBUTE</code>的方法 强行直接调用会报错, 当实例不想直接用init 初始化的时候可使用<br>eg: <code>- (instancetype)init UNAVAILABLE_ATTRIBUTE;</code></li>
+</ul>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>Q: 开发过程中什么样子的数据需要备份<br>A: 1.需要可备份存储的资料 -&gt; <code>Document</code></p>
+<pre><code>- 微信聊天记录
+- 单机游戏进度
+
+2. 不需要可备份存储的资料 -&gt; `Library/Cache`
+- 朋友圈,新闻等 资讯类
+</code></pre><p>Q: App设置中清理缓存 清理的是哪个文件下的资源<br>A: 看清理缓存 对应的 清理机制 一般清理的是<code>Library/Cache</code></p>
+<p>Q: 存放在 <code>document</code>, <code>Library</code>, <code>tmp</code> 外的文件夹 系统如何对待<br>A: 系统只备份<code>document</code> 跟 <code>Library/preference</code> 下的数据 , 且重启手机,系统也只删除tmp下的数据</p>
+<p>Q: 为什么yycache里面要使用锁<br>A: 在进行读写操作修改链表的时候,不可以有并发操作同时修改链表<br>   eg: 售货员有1张票  当有人买了 进行修改删除的时候 其他人也可以进行操作 便会出现错误.</p>
+<p>参考:<br><a href="http://blog.flight.dev.qunar.com/2017/04/19/yycache-code-study/" target="_blank" rel="external">QunarFlight团队|YYCache解读</a><br><a href="https://blog.ibireme.com/2015/10/26/yycache/" target="_blank" rel="external">YYCache的设计思路</a></p>
+<p>刚开始写文章,写的并不是非常好,但会坚持下去的<br>另外想要源码标注详细中文注释的可以在下面留邮箱</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/27/自动化批量打包/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZhanKail">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KailTalk">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/27/自动化批量打包/" itemprop="url">自动化批量打包</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-27T20:31:00+08:00">
+                2017-08-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><pre><code>手动打包是一个机械 而又 非常浪费时间的过程,每当测试人员想你要测试包的时候 , 你就不得不重复这一次次过程.从我自己现在工作中的一个项目的场景谈起,他最终会需要生成n个包(大于十个且数量随销售增加),但它使用的是同一套源代码,只是需要修改plist中的一些参数,eg:`dispalyName/Icon/…如果是手动打包的话,每次更新版本就是你听着风扇狂响崩溃的时候
+</code></pre><h2 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h2><h4 id="1-xcodebuild-list-project-lt-projectname-gt-workspace-lt-workspacename-gt-json-gt-先查看一下项目的scheme-amp-configrations"><a href="#1-xcodebuild-list-project-lt-projectname-gt-workspace-lt-workspacename-gt-json-gt-先查看一下项目的scheme-amp-configrations" class="headerlink" title="1.xcodebuild -list [[-project &lt;projectname&gt;]|[-workspace &lt;workspacename&gt;]] [-json] -&gt; 先查看一下项目的scheme &amp; configrations:"></a>1.<code>xcodebuild -list [[-project &lt;projectname&gt;]|[-workspace &lt;workspacename&gt;]] [-json]</code> -&gt; 先查看一下项目的scheme &amp; configrations:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">// 先cd到你的项目路径</div><div class="line">$ cd xxxx</div><div class="line">// 查看一下项目的scheme &amp; configrations</div><div class="line">$ xcodebuild -list -project YouXiaoYun.xcodeproj -json</div><div class="line">&#123;</div><div class="line">  &quot;project&quot; : &#123;</div><div class="line">    &quot;targets&quot; : [</div><div class="line">      &quot;xxx&quot;,</div><div class="line">      &quot;xxxTests&quot;</div><div class="line">    ],</div><div class="line">    &quot;schemes&quot; : [</div><div class="line">      &quot;xxx&quot;</div><div class="line">    ],</div><div class="line">    &quot;configurations&quot; : [</div><div class="line">      &quot;Debug&quot;,</div><div class="line">      &quot;Release&quot;</div><div class="line">    ],</div><div class="line">    &quot;name&quot; : &quot;xxx&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-build-生成-app文件"><a href="#2-build-生成-app文件" class="headerlink" title="2.build 生成 .app文件"></a>2.build 生成 .app文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ xcodebuild -workspace &lt;#workspacePath#&gt; -scheme &lt;#scheme#&gt; -configuration &lt;#configuration#&gt; -sdk iphoneos build &lt;#showBuildSettings#&gt; &lt;#buildsetting&gt;=&lt;value#&gt; </div><div class="line">...</div><div class="line">...</div><div class="line">** BUILD SUCCEEDED **</div></pre></td></tr></table></figure>
+<ul>
+<li><code>&lt;buildsetting&gt;=&lt;value&gt;</code>: 一般设置证书(CODE_SIGN_IDENTITY),配置文件(PROVISIONING_PROFILE),SYMROOT</li>
+<li><code>&lt;buildaction&gt;</code>: 默认是build, 其他 buildaction如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">buildaction ...</div><div class="line">         Specify a build action (or actions) to perform on the target. Available build actions are:</div><div class="line"></div><div class="line">         build       Build the target in the build root (SYMROOT).  This is the default build action.</div><div class="line"></div><div class="line">         analyze     Build and analyze a target or scheme from the build root (SYMROOT).  This requires</div><div class="line">                     specifying a scheme.</div><div class="line"></div><div class="line">         archive     Archive a scheme from the build root (SYMROOT).  This requires specifying a scheme.</div><div class="line"></div><div class="line">         test        Test a scheme from the build root (SYMROOT).  This requires specifying a scheme and</div><div class="line">                     optionally a destination.</div><div class="line"></div><div class="line">         installsrc  Copy the source of the project to the source root (SRCROOT).</div><div class="line"></div><div class="line">         install     Build the target and install it into the target&apos;s installation directory in the dis-tribution distribution</div><div class="line">                     tribution root (DSTROOT).</div><div class="line"></div><div class="line">         clean       Remove build products and intermediate files from the build root (SYMROOT).</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="3-xcrun-导出成包"><a href="#3-xcrun-导出成包" class="headerlink" title="3.xcrun:导出成包"></a>3.<code>xcrun</code>:导出成包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcrun -sdk iphoneos -v PackageApplication &lt;#.appPath#&gt; -o &lt;#.ipaPath/xxx.ipa#&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>&lt;#.appPath#&gt;</code>:  .app文件的路径</li>
+<li><code>&lt;#.ipaPath/xxx.ipa#&gt;</code>: .ipa包导出的路径,和.ipa包的名字</li>
+</ul>
+<p>警告:<code>warning: PackageApplication is deprecated, use xcodebuild -exportArchive instead.</code><br>但是不会影响程序的运行.<br>想要消除警告可用<code>xcodebuild archive</code>&amp;<code>xcodebuild -exportArchive ...</code>来生成和导出包,详细的用法可以参照<a href="https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html" target="_blank" rel="external">官方文档</a></p>
+<h2 id="批量打包思路"><a href="#批量打包思路" class="headerlink" title="批量打包思路"></a>批量打包思路</h2><p>批量打包的大体过程为两个步骤<br>1.代码编译成.app文件<br>2..修改内容,然后重签名 生成.ipa包<br><img src="/images/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%89%B9%E9%87%8F%E6%89%93%E5%8C%85/82F80C2D-F272-4AE4-864A-525B98B8520C.png" alt=""></p>
+<p> 我们在打包的时候浪费最多时间的就是第一个步骤编译生成.app文件,根据以上所说的项目背景,我们应该在codesign上下功夫,也就是说 但当编译成.app文件后,通过修改.plist文件再重签名达到自动化批量打包的效果</p>
+<h4 id="1-codesign-重签名"><a href="#1-codesign-重签名" class="headerlink" title="1.codesign: 重签名"></a>1.<code>codesign</code>: 重签名</h4><p><code>codesign -f -s &quot;iPhone Distribution: xx co., LTD&quot; --entitlements &lt;#EntitlementsPath#&gt; $ipaPath/Payload/xxx.app</code></p>
+<ul>
+<li>entitlements: 自己本地创建的授权文件.可以参照<a href="https://www.objc.io/issues/17-security/inside-code-signing/" target="_blank" rel="external">Inside Code Signing</a>中的设置,如下<br><img src="/images/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%89%B9%E9%87%8F%E6%89%93%E5%8C%85/3E8912A1-B9A6-4A05-969E-7775C67C22C3.png" alt=""></li>
+</ul>
+<h4 id="2-查看签名信息-codesign-vv-d-Example-app"><a href="#2-查看签名信息-codesign-vv-d-Example-app" class="headerlink" title="2.查看签名信息:codesign -vv -d Example.app"></a>2.查看签名信息:<code>codesign -vv -d Example.app</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">$ codesign -vv -d xxx.app</div><div class="line">Executable=xxx/Payload/xxx.app/xxx</div><div class="line">Identifier=com.xxx</div><div class="line">Format=app bundle with Mach-O universal (armv7 arm64)</div><div class="line">CodeDirectory v=20200 size=71375 flags=0x0(none) hashes=2223+5 location=embedded</div><div class="line">Signature size=4748</div><div class="line">Authority=iPhone Distribution: xxx co., LTD</div><div class="line">Authority=Apple Worldwide Developer Relations Certification Authority</div><div class="line">Authority=Apple Root CA</div><div class="line">Signed Time=2017年11月5日 下午3:31:14</div><div class="line">Info.plist entries=36</div><div class="line">TeamIdentifier=xxx</div><div class="line">Sealed Resources version=2 rules=13 files=702</div><div class="line">Internal requirements count=1 size=200</div></pre></td></tr></table></figure>
+<p>查看Authority 开头的三个中代表:我的证书,Apple私钥签名我的公钥,公证处(CA)</p>
+<h4 id="3-检测重签名是否成功"><a href="#3-检测重签名是否成功" class="headerlink" title="3.检测重签名是否成功"></a>3.检测重签名是否成功</h4><p><code>codesign --verify Example.app</code>: -&gt; 没有任何输出则代表签名完好</p>
+<h2 id="最终代码"><a href="#最终代码" class="headerlink" title="最终代码"></a>最终代码</h2><p> <a href="https://github.com/ZhanKail/AutoPacking" target="_blank" rel="external">demo下载</a></p>
+<h2 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h2><h4 id="iOS-证书配置问题"><a href="#iOS-证书配置问题" class="headerlink" title="iOS 证书配置问题"></a>iOS 证书配置问题</h4><p>编译生成.app文件的时候<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Code Signing Error: Code signing is required for product type &apos;Application&apos; in SDK &apos;iOS 11.0&apos;</div><div class="line">** BUILD FAILED **</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>1.检查项目是不是选择了自动签名,使用脚本签名的时候 不能打开自动签名<br><img src="/images/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%89%B9%E9%87%8F%E6%89%93%E5%8C%85/B3217A71-84DE-490C-9722-0ECCB695BA05.png" alt=""></p>
+</li>
+<li><p>2.打开keychain,检查你的证书, 配置文件设置是否正确<br><img src="/images/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%89%B9%E9%87%8F%E6%89%93%E5%8C%85/10228E9E-06BF-48A8-AA1C-6221EC904397.png" alt=""></p>
+</li>
+</ul>
+<h4 id="app相关属性移除"><a href="#app相关属性移除" class="headerlink" title=".app相关属性移除:"></a>.app相关属性移除:</h4><p>如果在重签名中遇到了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ codesign -f -s &quot;iPhone Distribution: XXXXX&quot; --entitlements xxxx.plist  xxxx/Payload/xxxx.app</div><div class="line">xxxx/Payload/xxxx.app: replacing existing signature</div><div class="line">xxxx/Payload/xxxx.app: resource fork, Finder information, or similar detritus not allowed</div></pre></td></tr></table></figure></p>
+<p>可以使用<code>xattr -cr $ipaPath/Payload/xxx.app</code>: 移除包内一些配置属性,详情可看:<a href="https://developer.apple.com/library/content/qa/qa1940/_index.html" target="_blank" rel="external">官方文档</a></p>
+<p>如果遇到其他不能解决的问题欢迎在下方留言</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>适当地使用脚本打包是提高效率,减少反复机械打包操作的途径.可以尝试着使用<code>xcodebuild</code> 和 <code>codesign</code> 打一个包试试.然后一一解决出现的问题, 那样会有趣的多. 网上也已经有各种指令报错的解决方法了,当网上找不到答案的时候, 可以尝试着使用stackoverflow提问, 上面有很多非常积极和热心的网友</p>
+<p>参考文章:<br><a href="http://blog.cnbang.net/tech/3386/" target="_blank" rel="external">iOS App 签名的原理</a><br><a href="https://www.objc.io/issues/17-security/inside-code-signing/" target="_blank" rel="external">Inside Code Signing</a><br><a href="http://www.jianshu.com/p/4cf4e45a4411" target="_blank" rel="external">关于 iOS 批量打包的总结 - 简书</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -771,7 +769,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -783,8 +781,8 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -834,7 +832,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
