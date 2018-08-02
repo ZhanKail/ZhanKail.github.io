@@ -196,7 +196,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -206,7 +206,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -272,7 +272,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/02/自动化批量打包/" itemprop="url">Unbenannt</a></h1>
+                <a class="post-title-link" href="/2018/08/02/自动化批量打包/" itemprop="url">Untitled</a></h1>
         
 
         <div class="post-meta">
@@ -282,7 +282,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T20:43:14+08:00">
                 2018-08-02
@@ -324,7 +324,7 @@
       
         
           
-            <h1 id="自动化批量打包"><a href="#自动化批量打包" class="headerlink" title="自动化批量打包"></a>自动化批量打包</h1><p>#博客</p>
+            <p>title: 自动化批量打包<br>date: 2017-08-27 20:31<br>tags: [iOS, 签名]</p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><pre><code>手动打包是一个机械 而又 非常浪费时间的过程,每当测试人员想你要测试包的时候 , 你就不得不重复这一次次过程.从我自己现在工作中的一个项目的场景谈起,他最终会需要生成n个包(大于十个且数量随销售增加),但它使用的是同一套源代码,只是需要修改plist中的一些参数,eg:`dispalyName/Icon/…如果是手动打包的话,每次更新版本就是你听着风扇狂响崩溃的时候
 </code></pre><h2 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h2><h4 id="1-xcodebuild-list-project-lt-projectname-gt-workspace-lt-workspacename-gt-json-gt-先查看一下项目的scheme-amp-configrations"><a href="#1-xcodebuild-list-project-lt-projectname-gt-workspace-lt-workspacename-gt-json-gt-先查看一下项目的scheme-amp-configrations" class="headerlink" title="1.xcodebuild -list [[-project &lt;projectname&gt;]|[-workspace &lt;workspacename&gt;]] [-json] -&gt; 先查看一下项目的scheme &amp; configrations:"></a>1.<code>xcodebuild -list [[-project &lt;projectname&gt;]|[-workspace &lt;workspacename&gt;]] [-json]</code> -&gt; 先查看一下项目的scheme &amp; configrations:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">// 先cd到你的项目路径</div><div class="line">$ cd xxxx</div><div class="line">// 查看一下项目的scheme &amp; configrations</div><div class="line">$ xcodebuild -list -project YouXiaoYun.xcodeproj -json</div><div class="line">&#123;</div><div class="line">  &quot;project&quot; : &#123;</div><div class="line">    &quot;targets&quot; : [</div><div class="line">      &quot;xxx&quot;,</div><div class="line">      &quot;xxxTests&quot;</div><div class="line">    ],</div><div class="line">    &quot;schemes&quot; : [</div><div class="line">      &quot;xxx&quot;</div><div class="line">    ],</div><div class="line">    &quot;configurations&quot; : [</div><div class="line">      &quot;Debug&quot;,</div><div class="line">      &quot;Release&quot;</div><div class="line">    ],</div><div class="line">    &quot;name&quot; : &quot;xxx&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="2-build-生成-app文件"><a href="#2-build-生成-app文件" class="headerlink" title="2.build 生成 .app文件"></a>2.build 生成 .app文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ xcodebuild -workspace &lt;#workspacePath#&gt; -scheme &lt;#scheme#&gt; -configuration &lt;#configuration#&gt; -sdk iphoneos build &lt;#showBuildSettings#&gt; &lt;#buildsetting&gt;=&lt;value#&gt; </div><div class="line">...</div><div class="line">...</div><div class="line">** BUILD SUCCEEDED **</div></pre></td></tr></table></figure>
@@ -428,7 +428,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/02/YYCache读后感/" itemprop="url">Unbenannt</a></h1>
+                <a class="post-title-link" href="/2018/08/02/YYCache读后感/" itemprop="url">Untitled</a></h1>
         
 
         <div class="post-meta">
@@ -438,7 +438,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T20:42:34+08:00">
                 2018-08-02
@@ -480,7 +480,7 @@
       
         
           
-            <h1 id="YYCache读后感"><a href="#YYCache读后感" class="headerlink" title="YYCache读后感"></a>YYCache读后感</h1><p>#博客</p>
+            <p>title: YYCache读后感<br>date: 2017-11-08 23:11<br>tags: [源码阅读]</p>
 <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><ul>
 <li>什么是cache 以及 为什么要使用cache</li>
 <li>YYCache的查存取删  (缓存LRU)</li>
@@ -593,7 +593,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/02/MoWords | MVVM 的使用/" itemprop="url">Unbenannt</a></h1>
+                <a class="post-title-link" href="/2018/08/02/MoWords | MVVM 的使用/" itemprop="url">Untitled</a></h1>
         
 
         <div class="post-meta">
@@ -603,7 +603,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T08:02:49+08:00">
                 2018-08-02
@@ -645,7 +645,7 @@
       
         
           
-            <h1 id="MoWords-MVVM-的使用"><a href="#MoWords-MVVM-的使用" class="headerlink" title="MoWords | MVVM 的使用"></a>MoWords | MVVM 的使用</h1><p>#博客</p>
+            <p>title: MoWords | MVVM 的使用<br>date: 2018-06-08 23:00<br>tags:[设计模式]</p>
 <h3 id="MVC’s-massive"><a href="#MVC’s-massive" class="headerlink" title="MVC’s massive"></a>MVC’s massive</h3><hr>
 <ul>
 <li><p>MVC 的介绍</p>
@@ -771,7 +771,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -784,7 +784,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -834,7 +834,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
